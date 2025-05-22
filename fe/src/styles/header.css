@@ -1,0 +1,138 @@
+.header{ /*targets the entire header container*/
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.title{
+    font-size: 2rem;
+    font-weight: bold;
+    text-align:center;
+    margin-bottom: 20px;
+}
+
+.task-header{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    margin-bottom: 20px
+}
+
+.task-header h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 20px;;
+}
+
+.add-task-btn{
+    background-color: black; /*Black background*/
+    color:white;             /*White Text*/   
+    padding: 10px 16px;        /*Size*/     
+    border-radius: 30px;
+    font-size:1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+}
+
+.add-task-btn:hover{
+    background-color: #333;
+}
+
+.modal{
+    position: fixed; /*when user move th page the modal moves along with it*/
+    top: 50%; /*centered container*/
+    left: 50%;
+    transform: translate(-50%, -50%); /*  completly centered in the screen */
+    border: 1px solid black;
+    border-radius:10px;
+    z-index: 1000; /*draw everything above the index*/
+    background-color: white;
+    width: 500px; /*Fixed model in the screen */
+    max-width: 90%;
+    padding: 24px;
+}
+
+
+
+.modal-header{
+
+  display: flex;                     /* enables flex layout */
+  justify-content: space-between;   /* spaces title and button */
+  align-items: center;              /* vertically center aligned */
+}
+
+.modal-title{
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.modal-header .close-button{
+    cursor: pointer; /* clickable button*/
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1.5rem;
+    font-weight:bold;
+}
+
+.modal-body input,
+.modal-body textarea {
+  width: 90%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.modal-footer{
+    display: flex;
+    justify-content: flex-end;
+    gap:10px;
+    margin-top: 1rem;
+}
+
+.cancel-btn,
+.create-btn{
+    padding: 8px 16px;
+    border:none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.cancel-btn{
+    background-color: #f0f0f0;
+}
+
+.create-btn{
+    background-color:black;
+    color:white;
+}
+
+
+#overlay {
+    display: none;
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease;
+    z-index: 900;
+    justify-content: center;
+    align-items: center;
+}
+
+#overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+
+
+
+
