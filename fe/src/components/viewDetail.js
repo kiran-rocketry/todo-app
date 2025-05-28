@@ -1,7 +1,7 @@
 import { taskMenuDetail } from "./taskMenuDetail";
 
 export function viewDetail() {
-   document.querySelector("task-list").addEventListener("click", (e) => {
+   document.body.querySelector("task-list").addEventListener("click", (e) => {
     const button = e.target.closest(".menu-view");
     if (!button) return;
 

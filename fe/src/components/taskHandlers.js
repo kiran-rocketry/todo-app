@@ -1,12 +1,14 @@
+// taskManager.js
+
 import {
   createTodo,
   getTodos,
   deleteTodo,
   updateTodo,
-} from "../services/taskapi";
+} from "../services/taskapi.js";
 
 import { taskMenuDetail } from "./taskMenuDetail.js";
-import { viewDetail } from "./viewDetail.js";
+import { taskMenuEdit } from "./taskMenuEdit.js";
 
 // Setup task creation and loading
 export function setupCreateTaskHandler() {
@@ -106,34 +108,140 @@ function renderTask(task, taskList) {
     menu.classList.toggle("hidden");
   });
 
-  // const viewBtn = taskItem.querySelector(".menu-view");
-  // viewBtn.addEventListener("click", () => {
-  //   const existingModal = document.getElementById("task-details-model");
-  //   if (existingModal) existingModal.remove();
+    // Edit button in menu
+  const editBtn = taskItem.querySelector(".menu-edit");
+  editBtn.addEventListener("click", () => {
+    // Remove any existing modal
+    const existingModal = document.querySelector(".modal-overlay");
+    if (existingModal) existingModal.remove();
 
-  //   document.body.insertAdjacentHTML("beforeend", taskMenuDetail());
+    // Insert the edit modal
+    document.body.insertAdjacentHTML("beforeend", taskMenuEdit(task));
 
-  //   const modal = document.getElementById("task-details-model");
-  //   const titleEl = document.getElementById("detail-title");
-  //   const descEl = document.getElementById("detail-description");
-  //   const createdEl = document.getElementById("detail-date");
-  //   const completedEl = document.getElementById("detail-completion-text");
-  //   const closeButton = document.getElementById("close-detail");
+    const editModal = document.querySelector(".modal-overlay");
+    const closeButtons = editModal.querySelectorAll(".modal-close, .close-edit-btn");
+    const saveButton = editModal.querySelector(".save-edit-btn");
+    const titleInput = editModal.querySelector("#edit-title");
+    const descInput = editModal.querySelector("#edit-description");
 
-  //   if (!modal || !titleEl || !descEl || !createdEl || !completedEl || !closeButton) {
-  //     console.error("Modal elements not found");
-  //     return;
-  //   }
+    closeButtons.forEach((btn) => {
+      btn.addEventListener("click", () => editModal.remove());
+    });
 
-  //   titleEl.textContent = task.title || "N/A";
-  //   descEl.textContent = task.description || "No description";
-  //   createdEl.textContent = new Date(task.createdAt).toLocaleString();
-  //   completedEl.textContent = task.isCompleted ? "Yes" : "No";
+    saveButton.addEventListener("click", async () => {
+      const updatedTask = {
+        ...task,
+        title: titleInput.value.trim(),
+        description: descInput.value.trim(),
+      };
 
-  //   modal.classList.remove("hidden_detail");
+      if (!updatedTask.title) {
+        alert("Title cannot be empty");
+        return;
+      }
 
-  //   closeButton.onclick = () => modal.remove();
-  // });
+      try {
+        await updateTodo(task._id, updatedTask);
+
+        const oldTaskItem = document.querySelector(`[data-id="${task._id}"]`);
+        if (oldTaskItem) oldTaskItem.remove();
+
+        const targetList = updatedTask.isCompleted
+          ? document.querySelector(".complete-list")
+          : document.querySelector(".incomplete-list");
+
+        renderTask(updatedTask, targetList);
+
+        editModal.remove();
+      } catch (err) {
+        console.error("Failed to update task", err);
+      }
+    });
+  });
+
+
+  const viewBtn = taskItem.querySelector(".menu-view");
+  viewBtn.addEventListener("click", () => {
+    // Remove any existing modal
+    const existingModal = document.querySelector(".modal-overlay");
+    if (existingModal) existingModal.remove();
+
+    // Insert new modal HTML into the body
+    document.body.insertAdjacentHTML("beforeend", taskMenuDetail(task));
+
+    // Get modal elements
+    const modal = document.querySelector(".modal-overlay");
+    const closeButtons = modal.querySelectorAll(".modal-close, .close-view-btn");
+
+    // Handle close events
+    closeButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        modal.remove();
+      });
+    });
+
+    // Handle ESC key to close modal
+    const escListener = (e) => {
+      if (e.key === "Escape") {
+        modal.remove();
+        document.removeEventListener("keydown", escListener);
+      }
+    };
+    document.addEventListener("keydown", escListener);
+
+    // Handle edit button inside the view modal
+    const editButton = modal.querySelector(".edit-view-btn");
+    editButton.addEventListener("click", () => {
+      modal.remove(); // Close the current view modal
+
+      // Remove any existing modal
+      const existingModal = document.querySelector(".modal-overlay");
+      if (existingModal) existingModal.remove();
+
+      // Insert the edit modal
+      document.body.insertAdjacentHTML("beforeend", taskMenuEdit(task));
+
+      const editModal = document.querySelector(".modal-overlay");
+      const closeButtons = editModal.querySelectorAll(".modal-close, .close-edit-btn");
+      const saveButton = editModal.querySelector(".save-edit-btn");
+      const titleInput = editModal.querySelector("#edit-title");
+      const descInput = editModal.querySelector("#edit-description");
+
+      closeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => editModal.remove());
+      });
+
+      saveButton.addEventListener("click", async () => {
+        const updatedTask = {
+          ...task,
+          title: titleInput.value.trim(),
+          description: descInput.value.trim(),
+        };
+
+        if (!updatedTask.title) {
+          alert("Title cannot be empty");
+          return;
+        }
+
+        try {
+          await updateTodo(task._id, updatedTask);
+
+          const oldTaskItem = document.querySelector(`[data-id="${task._id}"]`);
+          if (oldTaskItem) oldTaskItem.remove();
+
+          const targetList = updatedTask.isCompleted
+            ? document.querySelector(".complete-list")
+            : document.querySelector(".incomplete-list");
+
+          renderTask(updatedTask, targetList);
+
+          editModal.remove();
+        } catch (err) {
+          console.error("Failed to update task", err);
+        }
+      });
+    });
+  });
 
   // Mark done/undo
   const btn = taskItem.querySelector(isCompleted ? ".undo-btn" : ".done-btn");
@@ -153,4 +261,16 @@ function renderTask(task, taskList) {
     }
   });
 
+  // Delete task
+  const deleteBtn = taskItem.querySelector(".menu-delete");
+  deleteBtn.addEventListener("click", async () => {
+    if (confirm("Are you sure you want to delete this task?")) {
+      try {
+        await deleteTodo(task._id);
+        taskItem.remove();
+      } catch (err) {
+        console.error("Failed to delete task", err);
+      }
+    }
+  });
 }

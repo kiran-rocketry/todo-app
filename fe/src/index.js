@@ -5,6 +5,8 @@ import { renderToggletask } from './components/toggleTask.js';
 import { deleteTask } from './utils/delete.js';
 import './styles/main.css';
 import { viewDetail } from './components/viewDetail.js';
+import { taskMenu } from './components/taskMenu.js';
+import { taskMenuDetail } from './components/taskMenuDetail.js';
 
 const app = document.getElementById('app');
 if (!app) {
@@ -16,7 +18,7 @@ app.innerHTML = `
   `.trim();
 
 setupCreateTaskHandler(); // ✅ Add event listeners after DOM is created
-//viewDetail();
+
 renderToggletask();
 initApp(); // call you setup logic
 deleteTask();
@@ -64,28 +66,3 @@ if (!overlay) {
 
   });
 }
-
-
-
-// // Show modal
-// addBtn.addEventListener('click', () => {
-//   overlay.classList.add('active');
-// });
-
-// // Close modal with 'X' button
-// closeBtn.addEventListener('click', () => {
-//   overlay.classList.remove('active');
-// });
-
-// // Close modal with 'Cancel' button
-// cancelBtn.addEventListener('click', () => {
-//   overlay.classList.remove('active');
-// });
-
-// // Close modal by clicking outside the modal
-// overlay.addEventListener('click', (e) => {
-//   if (e.target === overlay) {
-//     overlay.classList.remove('active');
-//   }
-// });
-
