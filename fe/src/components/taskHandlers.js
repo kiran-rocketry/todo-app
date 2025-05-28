@@ -6,6 +6,7 @@ import {
 } from "../services/taskapi";
 
 import { taskMenuDetail } from "./taskMenuDetail.js";
+import { viewDetail } from "./viewDetail.js";
 
 // Setup task creation and loading
 export function setupCreateTaskHandler() {
@@ -61,6 +62,7 @@ export function setupCreateTaskHandler() {
 // Render a single task
 function renderTask(task, taskList) {
   const taskItem = document.createElement("div");
+  taskItem.dataset.id = task._id;
   taskItem.className = "task-item";
   taskItem.dataset.title = task.title;
   taskItem.dataset.description = task.description;
@@ -104,35 +106,34 @@ function renderTask(task, taskList) {
     menu.classList.toggle("hidden");
   });
 
-  // View Details button logic
-  const viewBtn = taskItem.querySelector(".menu-view");
-  viewBtn.addEventListener("click", () => {
-    const existingModal = document.getElementById("task-details-model");
-    if (existingModal) existingModal.remove();
+  // const viewBtn = taskItem.querySelector(".menu-view");
+  // viewBtn.addEventListener("click", () => {
+  //   const existingModal = document.getElementById("task-details-model");
+  //   if (existingModal) existingModal.remove();
 
-    document.body.insertAdjacentHTML("beforeend", taskMenuDetail());
+  //   document.body.insertAdjacentHTML("beforeend", taskMenuDetail());
 
-    const modal = document.getElementById("task-details-model");
-    const titleEl = document.getElementById("detail-title");
-    const descEl = document.getElementById("detail-description");
-    const createdEl = document.getElementById("detail-date");
-    const completedEl = document.getElementById("detail-completion-text");
-    const closeButton = document.getElementById("close-detail");
+  //   const modal = document.getElementById("task-details-model");
+  //   const titleEl = document.getElementById("detail-title");
+  //   const descEl = document.getElementById("detail-description");
+  //   const createdEl = document.getElementById("detail-date");
+  //   const completedEl = document.getElementById("detail-completion-text");
+  //   const closeButton = document.getElementById("close-detail");
 
-    if (!modal || !titleEl || !descEl || !createdEl || !completedEl || !closeButton) {
-      console.error("Modal elements not found");
-      return;
-    }
+  //   if (!modal || !titleEl || !descEl || !createdEl || !completedEl || !closeButton) {
+  //     console.error("Modal elements not found");
+  //     return;
+  //   }
 
-    titleEl.textContent = task.title || "N/A";
-    descEl.textContent = task.description || "No description";
-    createdEl.textContent = new Date(task.createdAt).toLocaleString();
-    completedEl.textContent = task.isCompleted ? "Yes" : "No";
+  //   titleEl.textContent = task.title || "N/A";
+  //   descEl.textContent = task.description || "No description";
+  //   createdEl.textContent = new Date(task.createdAt).toLocaleString();
+  //   completedEl.textContent = task.isCompleted ? "Yes" : "No";
 
-    modal.classList.remove("hidden_detail");
+  //   modal.classList.remove("hidden_detail");
 
-    closeButton.onclick = () => modal.remove();
-  });
+  //   closeButton.onclick = () => modal.remove();
+  // });
 
   // Mark done/undo
   const btn = taskItem.querySelector(isCompleted ? ".undo-btn" : ".done-btn");
@@ -151,4 +152,5 @@ function renderTask(task, taskList) {
       console.error("Failed to toggle complete status", err);
     }
   });
+
 }

@@ -1,11 +1,12 @@
 import { taskMenuDetail } from "./taskMenuDetail";
 
 export function viewDetail() {
-   document.body.addEventListener("click", (e) => {
+   document.querySelector("task-list").addEventListener("click", (e) => {
     const button = e.target.closest(".menu-view");
     if (!button) return;
 
     const taskElement = button.closest(".task-item");
+    console.log(taskElement);
     if (!taskElement) return;
 
     // Remove old modal if exists

@@ -2,7 +2,7 @@ import { renderHeader } from './components/header.js';
 import { renderBody } from './components/body.js';
 import { setupCreateTaskHandler } from './components/taskHandlers.js';
 import { renderToggletask } from './components/toggleTask.js';
-
+import { deleteTask } from './utils/delete.js';
 import './styles/main.css';
 import { viewDetail } from './components/viewDetail.js';
 
@@ -19,6 +19,7 @@ setupCreateTaskHandler(); // ✅ Add event listeners after DOM is created
 //viewDetail();
 renderToggletask();
 initApp(); // call you setup logic
+deleteTask();
 
 }
 
