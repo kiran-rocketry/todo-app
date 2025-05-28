@@ -1,0 +1,65 @@
+.task-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  margin-right: 50px;
+  margin-left: 80px;
+}
+
+.task-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-test {
+  flex-grow: 1;
+}
+
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.undo-btn,
+.done-btn {
+  background-color: #f1f5f9;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 500;
+  color: black;
+  font-size: large;
+}
+
+.undo-btn .tick, 
+.done-btn .tick {
+  margin: 10px;
+}
+
+.menu-icon {
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.task-text h4 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #222;
+  margin: 0;
+  line-height: 20px;
+}
+
+.menu-icon {
+  font-size: larger;
+  font-size: 20px;
+}

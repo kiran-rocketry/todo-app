@@ -1,6 +1,8 @@
 @import'./header.css';
 @import'./body.css';
-
+@import'./taskHandlers';
+@import'./taskMenu';
+@import'./taskMenudetails';
 body{
   font-family: "Inter", sans-serif;
   background-color: #fefbf8;

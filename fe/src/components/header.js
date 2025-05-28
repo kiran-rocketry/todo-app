@@ -1,5 +1,5 @@
-export function renderHeader()
-{ return `
+export function renderHeader() {
+  return `
     <div class="header">
         <h1 class= "title"> Todo App</h1>
         <div class="task-header">
@@ -9,7 +9,7 @@ export function renderHeader()
                 Add task
             </button>
         </div>
-
+    
             <div id="overlay" class="modal-overlay">
             <div class="modal">
                 <div class="modal-header">
@@ -34,4 +34,4 @@ export function renderHeader()
         </div>
     </div>
      `;
- }
+}
