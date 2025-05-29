@@ -1,12 +1,8 @@
-import { renderHeader } from './components/header.js';
 import { renderBody } from './components/body.js';
-import { setupCreateTaskHandler } from './components/taskHandlers.js';
+import { renderHeader } from './components/header.js';
+import { setupCreateTaskHandler } from './utils/addTask.js'
 import { renderToggletask } from './components/toggleTask.js';
-import { deleteTask } from './utils/delete.js';
 import './styles/main.css';
-import { viewDetail } from './components/viewDetail.js';
-import { taskMenu } from './components/taskMenu.js';
-import { taskMenuDetail } from './components/taskMenuDetail.js';
 
 const app = document.getElementById('app');
 if (!app) {
@@ -21,7 +17,6 @@ setupCreateTaskHandler(); // ✅ Add event listeners after DOM is created
 
 renderToggletask();
 initApp(); // call you setup logic
-deleteTask();
 
 }
 
